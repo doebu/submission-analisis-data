@@ -50,7 +50,7 @@ with c4:
 
 st.divider()
 
-st.subheader("📅 Pertanyaan 1: Tren PM2.5 per Tahun dan Musim")
+st.subheader("📅 Pertanyaan 1: Pada tahun dan musim apa rata-rata PM2.5 tertinggi terjadi di Beijing selama Maret 2013 – Februari 2017?")
 col1, col2 = st.columns(2)
 
 with col1:
@@ -65,7 +65,7 @@ with col1:
         ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1.5,
                 f"{val:.1f}", ha="center", fontsize=10, fontweight="bold")
     ax.set_xlabel("Tahun"); ax.set_ylabel("PM2.5 (µg/m³)")
-    ax.set_title("Rata-rata PM2.5 per Tahun", fontweight="bold")
+    ax.set_title("Rata-rata PM2.5 per Tahun (2013–2017)", fontweight="bold")
     ax.legend(fontsize=8)
     plt.tight_layout()
     st.pyplot(fig); plt.close()
@@ -81,22 +81,23 @@ with col2:
         ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 1.5,
                 f"{val:.1f}", ha="center", fontsize=10, fontweight="bold")
     ax.set_xlabel("Musim"); ax.set_ylabel("PM2.5 (µg/m³)")
-    ax.set_title("Rata-rata PM2.5 per Musim", fontweight="bold")
+    ax.set_title("Rata-rata PM2.5 per Musim (2013–2017)", fontweight="bold")
     ax.legend(fontsize=8)
     plt.tight_layout()
     st.pyplot(fig); plt.close()
 
 with st.expander("📝 Insight Pertanyaan 1"):
     st.write("""
-    - Tren PM2.5 menunjukkan **penurunan dari 2013–2016**, kemudian sedikit meningkat pada 2017.
+    - Selama periode **Maret 2013 – Februari 2017**, **tahun 2013** mencatat rata-rata PM2.5 tertinggi di antara seluruh tahun pengamatan.
+    - Terdapat tren **penurunan dari 2013 hingga 2016**, mengindikasikan dampak positif kebijakan pengendalian polusi, namun angka sedikit meningkat kembali pada 2017.
     - Seluruh tahun **melampaui ambang batas China (75 µg/m³)** dan jauh di atas standar WHO (15 µg/m³).
-    - **Musim dingin (Winter)** secara konsisten memiliki PM2.5 tertinggi akibat pembakaran batu bara untuk pemanas.
-    - **Musim panas (Summer)** memiliki PM2.5 terendah karena curah hujan membersihkan udara.
+    - Secara musiman, **Winter (musim dingin)** secara konsisten mencatat rata-rata PM2.5 **tertinggi** akibat meningkatnya penggunaan pemanas berbahan bakar batu bara.
+    - **Summer (musim panas)** mencatat rata-rata PM2.5 **terendah** berkat curah hujan yang lebih tinggi dan angin yang lebih kencang.
     """)
 
 st.divider()
 
-st.subheader("📍 Pertanyaan 2: Perbandingan Kualitas Udara Antar Stasiun")
+st.subheader("📍 Pertanyaan 2: Stasiun mana yang memiliki rata-rata PM2.5 tertinggi dan terendah, serta berapa besar selisihnya selama Maret 2013 – Februari 2017?")
 col3, col4 = st.columns(2)
 
 with col3:
@@ -110,7 +111,7 @@ with col3:
         ax.text(val + 0.5, bar.get_y() + bar.get_height()/2,
                 f"{val:.1f}", va="center", fontsize=9, fontweight="bold")
     ax.set_xlabel("Rata-rata PM2.5 (µg/m³)")
-    ax.set_title("Rata-rata PM2.5 per Stasiun", fontweight="bold")
+    ax.set_title("Rata-rata PM2.5 per Stasiun (Maret 2013 – Februari 2017)", fontweight="bold")
     ax.legend(fontsize=8)
     plt.tight_layout()
     st.pyplot(fig); plt.close()
@@ -127,16 +128,21 @@ with col4:
     ax.set_xticklabels(station_order_box, rotation=45, ha="right", fontsize=8)
     ax.axhline(75, color="orange", linestyle="--", linewidth=1.5, label="Ambang (75 µg/m³)")
     ax.set_ylabel("PM2.5 (µg/m³)")
-    ax.set_title("Distribusi PM2.5 per Stasiun", fontweight="bold")
+    ax.set_title("Distribusi PM2.5 per Stasiun (Maret 2013 – Februari 2017)", fontweight="bold")
     ax.legend(fontsize=8)
     plt.tight_layout()
     st.pyplot(fig); plt.close()
 
 with st.expander("📝 Insight Pertanyaan 2"):
+    best = df_filter.groupby("station")["PM2.5"].mean().idxmin()
+    worst = df_filter.groupy("station")["PM2.5"].mean().idxmax()
+    best_val = df_filter.groupby("station")["PM2.5"].mean().min()
+    worst_val = df_filter.groupby("station")["PM2.5"].mean().max()
+    selisih = worst_val - best_val
     st.write("""
-    - **Wanshouxigong** dan **Gucheng** mencatat PM2.5 tertinggi (pusat kota/industri).
-    - **Dingling** dan **Huairou** mencatat PM2.5 terendah (wilayah pinggiran/pegunungan).
-    - Semua stasiun rata-rata **melebihi ambang batas** 75 µg/m³.
+    - Selama periode **Maret 2013 – Februari 2017**, stasiun **{worst}** mencatat rata-rata PM2.5 **tertinggi** ({worst_val:.1f} µg/m³), sementara stasiun **{best}** mencatat rata-rata PM2.5 **terendah** ({best_val:.1f} µg/m³).
+    - **Selisih rata-rata PM2.5** antara stasiun terpolusi dan terbersih adalah **{selisih:.1f} µg/m³**, mencerminkan pengaruh signifikan lokasi geografis (pusat kota/industri vs pinggiran/pegunungan).
+    - Meskipun demikian, **semua stasiun** rata-rata tetap melampaui ambang batas China 75 µg/m³ selama periode pengamatan.
     """)
 
 st.divider()
@@ -152,7 +158,7 @@ sq_pct_sorted = sq_pct.sort_values("Baik", ascending=False)
 fig, ax = plt.subplots(figsize=(12, 5))
 sq_pct_sorted.plot(kind="bar", stacked=True, ax=ax,
                    color=quality_colors, edgecolor="white", linewidth=0.5, width=0.7)
-ax.set_xlabel("Stasiun Pemantauan"); ax.set_ylabel("Persentase Waktu (%)")
+ax.set_xlabel("Stasiun"); ax.set_ylabel("Persentase Waktu (%)")
 ax.set_title("Distribusi Kategori Kualitas Udara per Stasiun (Binning Clustering)",
              fontsize=12, fontweight="bold")
 ax.set_xticklabels(ax.get_xticklabels(), rotation=30, ha="right", fontsize=9)
