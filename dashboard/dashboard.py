@@ -139,7 +139,7 @@ with st.expander("📝 Insight Pertanyaan 2"):
     best_val = df_filter.groupby("station")["PM2.5"].mean().min()
     worst_val = df_filter.groupby("station")["PM2.5"].mean().max()
     selisih = worst_val - best_val
-    st.write("""
+    st.write(f"""
     - Selama periode **Maret 2013 – Februari 2017**, stasiun **{worst}** mencatat rata-rata PM2.5 **tertinggi** ({worst_val:.1f} µg/m³), sementara stasiun **{best}** mencatat rata-rata PM2.5 **terendah** ({best_val:.1f} µg/m³).
     - **Selisih rata-rata PM2.5** antara stasiun terpolusi dan terbersih adalah **{selisih:.1f} µg/m³**, mencerminkan pengaruh signifikan lokasi geografis (pusat kota/industri vs pinggiran/pegunungan).
     - Meskipun demikian, **hampir semua stasiun** rata-rata tetap melampaui ambang batas China 75 µg/m³ selama periode pengamatan.
