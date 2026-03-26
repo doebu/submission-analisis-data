@@ -88,8 +88,8 @@ with col2:
 
 with st.expander("📝 Insight Pertanyaan 1"):
     st.write("""
-    - Selama periode **Maret 2013 – Februari 2017**, **tahun 2013** mencatat rata-rata PM2.5 tertinggi di antara seluruh tahun pengamatan.
-    - Terdapat tren **penurunan dari 2013 hingga 2016**, mengindikasikan dampak positif kebijakan pengendalian polusi, namun angka sedikit meningkat kembali pada 2017.
+    - Selama periode **Maret 2013 – Februari 2017**, **tahun 2017** mencatat rata-rata PM2.5 tertinggi di antara seluruh tahun pengamatan.
+    - Terdapat tren **penurunan dari 2015 hingga 2016**, mengindikasikan dampak positif kebijakan pengendalian polusi, namun angka tersebut meningkat kembali pada 2017.
     - Seluruh tahun **melampaui ambang batas China (75 µg/m³)** dan jauh di atas standar WHO (15 µg/m³).
     - Secara musiman, **Winter (musim dingin)** secara konsisten mencatat rata-rata PM2.5 **tertinggi** akibat meningkatnya penggunaan pemanas berbahan bakar batu bara.
     - **Summer (musim panas)** mencatat rata-rata PM2.5 **terendah** berkat curah hujan yang lebih tinggi dan angin yang lebih kencang.
@@ -135,14 +135,14 @@ with col4:
 
 with st.expander("📝 Insight Pertanyaan 2"):
     best = df_filter.groupby("station")["PM2.5"].mean().idxmin()
-    worst = df_filter.groupy("station")["PM2.5"].mean().idxmax()
+    worst = df_filter.groupby("station")["PM2.5"].mean().idxmax()
     best_val = df_filter.groupby("station")["PM2.5"].mean().min()
     worst_val = df_filter.groupby("station")["PM2.5"].mean().max()
     selisih = worst_val - best_val
     st.write("""
     - Selama periode **Maret 2013 – Februari 2017**, stasiun **{worst}** mencatat rata-rata PM2.5 **tertinggi** ({worst_val:.1f} µg/m³), sementara stasiun **{best}** mencatat rata-rata PM2.5 **terendah** ({best_val:.1f} µg/m³).
     - **Selisih rata-rata PM2.5** antara stasiun terpolusi dan terbersih adalah **{selisih:.1f} µg/m³**, mencerminkan pengaruh signifikan lokasi geografis (pusat kota/industri vs pinggiran/pegunungan).
-    - Meskipun demikian, **semua stasiun** rata-rata tetap melampaui ambang batas China 75 µg/m³ selama periode pengamatan.
+    - Meskipun demikian, **hampir semua stasiun** rata-rata tetap melampaui ambang batas China 75 µg/m³ selama periode pengamatan.
     """)
 
 st.divider()
@@ -169,9 +169,9 @@ st.pyplot(fig); plt.close()
 
 with st.expander("📝 Insight Analisis Lanjutan"):
     st.write("""
-    - **Dingling** dan **Huairou** memiliki proporsi waktu 'Baik' tertinggi (~30%).
-    - **Wanshouxigong** dan **Gucheng** memiliki proporsi 'Berbahaya' dan 'Sangat Tidak Sehat' terbesar.
-    - Lebih dari **50% jam pengamatan** di semua stasiun masuk kategori 'Tidak Sehat' atau lebih buruk.
+    - **Dingling**, **Huairou**, dan **Changping** memiliki proporsi waktu 'Baik' tertinggi (~40%).
+    - **Dongsi** dan **Gucheng** memiliki proporsi 'Berbahaya' dan 'Sangat Tidak Sehat' terbesar.
+    - Lebih dari **50% jam pengamatan** di semua stasiun masuk kategori 'Sedang' atau lebih buruk.
     """)
 
 st.divider()
